@@ -82,7 +82,7 @@ const Content = ({ styles, wifiList }) => {
             setOpen(false)
             setPasswordError(false)
             setLoader(true)
-            fetch(`http://${window.location.hostname}:80/findwifi/?ssid=${currentWifi.SSID}&pass=${pass}`)
+            fetch(`http://${window.location.hostname}:4500/findwifi/?ssid=${currentWifi.SSID}&pass=${pass}`)
                 .then(data => {
                     console.log(data)
                     setOpenInfo(true)
@@ -101,19 +101,17 @@ const Content = ({ styles, wifiList }) => {
 
     const clearAP = () => {
         setLoader(true)
-        fetch(`http://${window.location.hostname}:80/findwifi/?clear=0`)
+        fetch(`http://${window.location.hostname}:4500/findwifi/?clear=0`)
         .then(data => {
             console.log(data)
             setConnect(false)
             setOpenInfo(true)
         })
         .catch(err => console.log(err))
-        // setTimeout(() => {
-        //
-        // }, 10000)
-            .finally(() => {
-                setLoader(false)
-            })
+        .finally(() => {
+            setLoader(false)
+            setOpenInfo(true)
+        })
     }
 
     React.useEffect(() => {
@@ -121,7 +119,7 @@ const Content = ({ styles, wifiList }) => {
     }, [])
 
     const getWifiList = () => {
-        fetch(`http://${window.location.hostname}:80/findwifi`)
+        fetch(`http://${window.location.hostname}:4500/findwifi`)
             .then(data => data.json())
             .then(data => {
                 console.log(data)
@@ -171,6 +169,7 @@ const Content = ({ styles, wifiList }) => {
                     )}
 
                 </List>}
+
                 {connect &&
                     <div>
                         <Typography variant="h6" align='center' className={classes.title1}>
@@ -183,7 +182,7 @@ const Content = ({ styles, wifiList }) => {
                         <Typography variant="h6" align='center' >
                             Ethernet: {(connectedNet.eth && connectedNet.eth !== '0.0.0.0')?<b>{connectedNet.eth}</b>:<b>not connected</b>}
                         </Typography>
-                        
+
                         <div style={{width:'300px', marginLeft:'auto', marginRight:'auto', marginTop:'30px'}}>
                             <Button variant="outlined" onClick={clearAP} color="primary" className={classes.button}>
                                 Reset

@@ -109,10 +109,10 @@ iw dev wlan0 interface add uap0 type __ap
 echo "IPV4 forwarding: setting..."
 sysctl net.ipv4.ip_forward=1
 echo "Editing IP tables..."
-iptables -t nat -A POSTROUTING -s 192.168.70.0/24 ! -d 192.168.70.0/24 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.4.0/24 ! -d 192.168.4.0/24 -j MASQUERADE
 
 # Bring up uap0 interface. Commented out line may be a possible alternative to using dhcpcd.conf to set up the IP address.
-#ifconfig uap0 192.168.70.1 netmask 255.255.255.0 broadcast 192.168.70.255
+ifconfig uap0 192.168.4.1 netmask 255.255.255.0 broadcast 192.168.4.255
 ifconfig uap0 up
 
 # Start hostapd. 10-second sleep avoids some race condition, apparently. It may not need to be that long. (?) 
