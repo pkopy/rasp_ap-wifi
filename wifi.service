@@ -1,0 +1,10 @@
+[Unit]
+Description=Wifi configurator
+
+[Service]
+User=root
+ExecStart=/usr/bin/node /usr/local/lib/e2r/start.js start
+#ExecStop=/home/pi/ftp/files/e2r/start.js stop
+
+[Install]
+WantedBy=default.target
